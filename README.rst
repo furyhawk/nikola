@@ -10,6 +10,7 @@ You can pull the most recent pre-built image directly from the `Docker
 Hub`_ with:
 
 ::
+
    docker pull paddyhack/nikola
 
 Please note that the image does not have a default command set.  Also
@@ -23,6 +24,7 @@ Assuming your Nikola site lives in the current directory, you can use
 something like
 
 ::
+
    docker run --rm -it -v $PWD:/site -w /site -u $(id -u):$(id -g) \
        paddyhack/nikola /bin/sh
 
@@ -38,6 +40,7 @@ maintain your site interactively.  Of course, you can also start up a
 container for a one-off ``nikola`` command.  For example
 
 ::
+
    docker run --rm -it -v $PWD:/site -w /site -u $(id -u):$(id -g) \
        paddyhack/nikola nikola check -l
 
