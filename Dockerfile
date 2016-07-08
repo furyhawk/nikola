@@ -25,7 +25,11 @@ RUN apk add --no-cache                                                  \
     CFLAGS="$CFLAGS -L/lib"                                             \
     pip3 install $PIP_OPTS nikola                                       \
                                                                      && \
-    apk del .build-deps
+    apk del .build-deps                                              && \
+    find /usr/lib/python3.5                                             \
+        \( -type d -a -name test -o -name tests \)                      \
+        -o \( -type f -a -name '*.pyc' -o -name '*.pyo' \)              \
+        -exec rm -rf '{}' +
 
 RUN apk add --no-cache                                                  \
         libstdc++                                                       \
@@ -37,4 +41,8 @@ RUN apk add --no-cache                                                  \
                                                                      && \
     pip3 install $PIP_OPTS 'nikola[extras]'                             \
                                                                      && \
-    apk del .extra-build-deps
+    apk del .extra-build-deps                                        && \
+    find /usr/lib/python3.5                                             \
+        \( -type d -a -name test -o -name tests \)                      \
+        -o \( -type f -a -name '*.pyc' -o -name '*.pyo' \)              \
+        -exec rm -rf '{}' +
