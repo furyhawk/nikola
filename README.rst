@@ -6,11 +6,12 @@ is based on `Alpine Linux`_ and uses the latest version of Nikola with
 Python 3.  The Nikola "extras" are available.  All languages supported
 by Nikola can be used.
 
-You can pull the most recent pre-built image directly from the `Docker
-Hub`_ with:
+You can pull the most recent pre-built image directly from the GitLab
+Container Registry or `Docker Hub`_ with one of:
 
 ::
 
+   docker pull registry.gitlab.com/paddy-hack/nikola
    docker pull paddyhack/nikola
 
 Please note that the image does not have a default command set.  Also
@@ -26,7 +27,7 @@ something like
 ::
 
    docker run --rm -it -v $PWD:/site -w /site -u $(id -u):$(id -g) \
-       paddyhack/nikola /bin/sh
+       registry.gitlab.com/paddy-hack/nikola /bin/sh
 
 to start a container.  Your site will be volume mounted on ``/site``,
 which is also the working directory inside the container.  The ``-u``
@@ -42,7 +43,7 @@ container for a one-off ``nikola`` command.  For example
 ::
 
    docker run --rm -it -v $PWD:/site -w /site -u $(id -u):$(id -g) \
-       paddyhack/nikola nikola check -l
+       registry.gitlab.com/paddy-hack/nikola nikola check -l
 
 would check your site for dangling links.
 
