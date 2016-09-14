@@ -23,7 +23,7 @@ check:
   - docker run "$CI_REGISTRY_IMAGE" false
   - test -n "$CI_BUILD_TAG"
 
-image:
+release:
   stage: deploy
   script:
   - docker pull "$CI_REGISTRY_IMAGE"
