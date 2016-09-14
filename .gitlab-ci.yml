@@ -19,15 +19,16 @@ build:
 
 check:
   stage: test
+  allow_failure: true
   script:
   - docker run "$CI_REGISTRY_IMAGE" false
-  - test -n "$CI_BUILD_TAG"
 
 release:
   stage: deploy
+  only:
+  - tags
+  - master
   script:
   - docker pull "$CI_REGISTRY_IMAGE"
   - docker tag "$CI_REGISTRY_IMAGE" "$CI_REGISTRY_IMAGE":"$CI_BUILD_TAG"
   - docker push "$CI_REGISTRY_IMAGE":"$CI_BUILD_TAG"
-  only:
-  - master
