@@ -3,10 +3,11 @@
 #
 #  License: GPL-3.0+
 
-FROM        alpine:3.4
+FROM        alpine:edge
 MAINTAINER  Olaf Meeuwissen <paddy-hack@member.fsf.org>
 
 ENV PIP_OPTS --no-cache-dir --disable-pip-version-check
+ARG _VERSION
 
 RUN apk add --no-cache                                                  \
         python3 						        \
@@ -23,7 +24,7 @@ RUN apk add --no-cache                                                  \
         jpeg-dev                                                        \
                                                                      && \
     CFLAGS="$CFLAGS -L/lib"                                             \
-    pip3 install $PIP_OPTS nikola                                       \
+    pip3 install $PIP_OPTS nikola$_VERSION                              \
                                                                      && \
     apk del .build-deps                                              && \
     find /usr/lib/python3.5                                             \

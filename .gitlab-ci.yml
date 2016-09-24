@@ -3,32 +3,40 @@
 #
 # License: GPL-3.0+
 
+variables:
+  _VERSION: "7.8.0"
+  TEST_IMAGE: "$CI_REGISTRY_IMAGE":"$CI_BUILD_REF_NAME"
+  GOOD_IMAGE: "$CI_REGISTRY_IMAGE":"$_VERSION"
+  LAST_IMAGE: "$CI_REGISTRY_IMAGE":latest
+
 image: docker:latest
 services:
 - docker:dind
 
 before_script:
-- docker info
 - docker login -u gitlab-ci-token -p "$CI_BUILD_TOKEN" registry.gitlab.com
 
 build:
   stage: build
   script:
-  - docker build -t "$CI_REGISTRY_IMAGE" .
-  - docker push "$CI_REGISTRY_IMAGE"
+  - docker build --build-arg _VERSION="==$_VERSION"
+           --tag "$TEST_IMAGE" .
+  - docker push  "$TEST_IMAGE"
 
 check:
   stage: test
-  allow_failure: true
   script:
-  - docker run "$CI_REGISTRY_IMAGE" false
+  - docker pull "$TEST_IMAGE"
+  - docker run -v $PWD:/root:ro "$TEST_IMAGE"
+           /bin/sh -e /root/test.sh
 
 release:
   stage: deploy
   only:
-  - tags
   - master
   script:
-  - docker pull "$CI_REGISTRY_IMAGE"
-  - docker tag "$CI_REGISTRY_IMAGE" "$CI_REGISTRY_IMAGE":"$CI_BUILD_TAG"
-  - docker push "$CI_REGISTRY_IMAGE":"$CI_BUILD_TAG"
+  - docker pull "$TEST_IMAGE"
+  - docker tag  "$TEST_IMAGE" "$GOOD_IMAGE"
+  - docker push               "$GOOD_IMAGE"
+  - docker tag                "$GOOD_IMAGE" "$LAST_IMAGE"
+  - docker push                             "$LAST_IMAGE"
