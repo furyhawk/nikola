@@ -7,15 +7,24 @@ Python 3.  The Nikola "extras" are available.  All languages supported
 by Nikola can be used.
 
 You can pull the most recent pre-built image directly from the GitLab
-Container Registry or `Docker Hub`_ with one of:
+Container Registry with:
 
 ::
 
    docker pull registry.gitlab.com/paddy-hack/nikola
-   docker pull paddyhack/nikola
 
 Please note that the image does not have a default command set.  Also
 note that the image uses ``/bin/sh`` rather than ``/bin/bash``.
+
+
+Image Versions
+--------------
+
+The above command will pull the ``latest`` image that passed the build
+tests.  Images tagged with the upstream version used in the build are
+available as well.  A ``registry.gitlab.com/paddy-hack/nikola:7.8.0``
+image was built using Nikola version 7.8.0.  Have a look at the
+`container registry`_ to see what's available.
 
 
 Using the Image
@@ -42,13 +51,49 @@ container for a one-off ``nikola`` command.  For example
 
 ::
 
-   docker run --rm -it -v $PWD:/site -w /site -u $(id -u):$(id -g) \
+   docker run --rm -v $PWD:/site -w /site -u $(id -u):$(id -g) \
        registry.gitlab.com/paddy-hack/nikola nikola check -l
 
 would check your site for dangling links.
+
+
+Creating a Nikola Site
+----------------------
+
+Don't have a site yet?  No problem.  You can run ``nikola init`` in an
+interactive container.  You can also run a one-off, like so
+
+::
+
+   docker run --rm -it -v $PWD:/site -w /site -u $(id -u):$(id -g) \
+       registry.gitlab.com/paddy-hack/nikola nikola init .
+
+If you prefer to skip all the questions, pass the ``--quiet`` option
+to the ``nikola init`` command and edit the ``conf.py`` manually once
+the command has finished.
+
+
+Serving Your Site Locally
+-------------------------
+
+Want to proofread your site?  No problem!  You can use ``nikola``'s
+``serve`` command for this.  It serves your site on port 8000 by
+default but you have to expose that container port in order to make it
+accessible from the outside.  That goes like this (note the ``-p``
+option)
+
+::
+
+   docker run --rm -v $PWD:/site -w /site -u $(id -u):$(id -g) \
+       -p 8888:8000 registry.gitlab.com/paddy-hack/nikola nikola serve
+
+Now you can browse your site at ``http://localhost:8888/``.
+
+Use ``Ctrl+C`` to shut down the container process.
 
 
 .. _Alpine Linux: https://alpinelinux.org/
 .. _Docker: https://www.docker.com/
 .. _Docker Hub: https://hub.docker.com/
 .. _Nikola: https://getnikola.com/
+.. _container registry: https://gitlab.com/paddy-hack/nikola/container_registry
