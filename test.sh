@@ -27,9 +27,9 @@ rm index.html
 wget -q $BASE/posts/welcome-to-nikola.html
 
 # Fetch post links
-wget -q $BASE/stories/handbook.html
+wget -q $BASE/pages/handbook.html
 wget -q $BASE/galleries/demo/index.html
-wget -q $BASE/stories/listings-demo.html
-wget -q $BASE/stories/slides-demo.html
-wget -q $BASE/stories/dr-nikolas-vendetta.html
+wget -q $BASE/pages/listings-demo.html
+wget -q $BASE/pages/slides-demo.html
+wget -q $BASE/pages/dr-nikolas-vendetta.html
 rm index.html
