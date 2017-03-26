@@ -3,7 +3,7 @@
 #
 #  License: GPL-3.0+
 
-FROM        alpine:edge
+FROM        alpine:3.5
 MAINTAINER  Olaf Meeuwissen <paddy-hack@member.fsf.org>
 
 ENV PIP_OPTS --no-cache-dir --disable-pip-version-check
@@ -27,7 +27,7 @@ RUN apk add --no-cache                                                  \
     pip3 install $PIP_OPTS nikola$_VERSION                              \
                                                                      && \
     apk del .build-deps                                              && \
-    find /usr/lib/python3.5                                             \
+    find /usr/lib/python3.*                                             \
         \( -type d -a -name test -o -name tests \)                      \
         -o \( -type f -a -name '*.pyc' -o -name '*.pyo' \)              \
         -exec rm -rf '{}' +
@@ -43,7 +43,7 @@ RUN apk add --no-cache                                                  \
     pip3 install $PIP_OPTS 'nikola[extras]'                             \
                                                                      && \
     apk del .extra-build-deps                                        && \
-    find /usr/lib/python3.5                                             \
+    find /usr/lib/python3.*                                             \
         \( -type d -a -name test -o -name tests \)                      \
         -o \( -type f -a -name '*.pyc' -o -name '*.pyo' \)              \
         -exec rm -rf '{}' +
