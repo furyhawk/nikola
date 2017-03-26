@@ -5,7 +5,7 @@
 
 variables:
   _VERSION: "7.8.3"
-  TEST_IMAGE: "$CI_REGISTRY_IMAGE:$CI_BUILD_REF"
+  TEST_IMAGE: "$CI_REGISTRY_IMAGE:$CI_COMMIT_SHA"
   GOOD_IMAGE: "$CI_REGISTRY_IMAGE:$_VERSION"
   LAST_IMAGE: "$CI_REGISTRY_IMAGE:latest"
 
@@ -14,7 +14,7 @@ services:
 - docker:dind
 
 before_script:
-- docker login -u gitlab-ci-token -p "$CI_BUILD_TOKEN" registry.gitlab.com
+- docker login -u gitlab-ci-token -p "$CI_JOB_TOKEN" registry.gitlab.com
 
 build:
   stage: build
