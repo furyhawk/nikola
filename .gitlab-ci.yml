@@ -1,10 +1,10 @@
 # .gitlab-ci.yml -- to automate Docker Nikola image builds
-# Copyright (C) 2016  Olaf Meeuwissen
+# Copyright (C) 2016, 2017  Olaf Meeuwissen
 #
 # License: GPL-3.0+
 
 variables:
-  _VERSION: "7.8.3"
+  _VERSION: "7.8.4"
   TEST_IMAGE: "$CI_REGISTRY_IMAGE:$CI_COMMIT_SHA"
   GOOD_IMAGE: "$CI_REGISTRY_IMAGE:$_VERSION"
   LAST_IMAGE: "$CI_REGISTRY_IMAGE:latest"
