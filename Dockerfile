@@ -1,5 +1,5 @@
 #  Dockerfile -- for a nikola run-time environment
-#  Copyright (C) 2016  Olaf Meeuwissen
+#  Copyright (C) 2016, 2017  Olaf Meeuwissen
 #
 #  License: GPL-3.0+
 
@@ -40,7 +40,7 @@ RUN apk add --no-cache                                                  \
         musl-dev                                                        \
         python3-dev                                                     \
                                                                      && \
-    pip3 install $PIP_OPTS 'nikola[extras]'                             \
+    pip3 install $PIP_OPTS 'nikola[extras]'$_VERSION                    \
                                                                      && \
     apk del .extra-build-deps                                        && \
     find /usr/lib/python3.*                                             \
