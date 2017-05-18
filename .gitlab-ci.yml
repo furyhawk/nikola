@@ -19,7 +19,7 @@ before_script:
 build:
   stage: build
   script:
-  - docker pull "$LAST_IMAGE"
+  - docker pull "$LAST_IMAGE" || true
   - docker build --build-arg _VERSION="==$_VERSION"
            --tag "$TEST_IMAGE" .
   - docker push  "$TEST_IMAGE"
