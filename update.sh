@@ -1,4 +1,4 @@
-#!/bin/sh -eux
+#!/bin/sh -eu
 # update.sh -- script to bump the upstream version
 # Copyright (C) 2017  Olaf Meeuwissen
 #
