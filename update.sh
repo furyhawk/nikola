@@ -4,11 +4,19 @@
 #
 # License: GPL-v3.0+
 
-version=$(docker run --rm $LAST_IMAGE nikola version --check \
-    | sed -n 's/.*Nikola==\([0-9]\{1,\}\.[0-9]\{1,\}\.[0-9]\{1,\}\)`.*/\1/p')
+release=$(curl --silent \
+               https://api.github.com/repos/getnikola/nikola/releases/latest \
+                 | jq --raw-output '.name' \
+                 | sed 's/^v//')
+current=$(sed -n "s/^.*_VERSION: \"\([^\"]*\)\".*$/\1/p" .gitlab-ci.yml)
 
-test x != x$version || exit 0
+test x$current != x$release || exit 0
 
-sed -i "s/\(_VERSION: \"\)[^\"]*\(\"\)/\1$version\2/" .gitlab-ci.yml
-
-git commit -m "Bump upstream version" .gitlab-ci.yml
+if test -z "$(git status --porcelain -- .gitlab-ci.yml)"; then
+    sed -i "s/\(_VERSION: \"\)[^\"]*\(\"\)/\1$release\2/" .gitlab-ci.yml
+    git commit -m "Bump upstream version" .gitlab-ci.yml
+else
+    echo "Found uncommitted changes in .gitlab-ci.yml." >&2
+    echo "These prevented updating to Nikola $release." >&2
+    exit 1
+fi
