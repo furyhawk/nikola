@@ -6,7 +6,7 @@
 
 release=$(curl --silent \
                https://api.github.com/repos/getnikola/nikola/releases/latest \
-                 | jq --raw-output '.name' \
+                 | jq --raw-output '.tag_name' \
                  | sed 's/^v//')
 current=$(sed -n "s/^.*_VERSION: \"\([^\"]*\)\".*$/\1/p" .gitlab-ci.yml)
 
