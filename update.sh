@@ -14,7 +14,7 @@ test x$current != x$release || exit 0
 
 if test -z "$(git status --porcelain -- .gitlab-ci.yml)"; then
     sed -i "s/\(_VERSION: \"\)[^\"]*\(\"\)/\1$release\2/" .gitlab-ci.yml
-    git commit -m "Bump upstream version" .gitlab-ci.yml
+    git commit -m "Bump upstream version from $current to $release" .gitlab-ci.yml
 else
     echo "Found uncommitted changes in .gitlab-ci.yml." >&2
     echo "These prevented updating to Nikola $release." >&2
