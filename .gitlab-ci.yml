@@ -16,8 +16,17 @@ services:
 before_script:
 - docker login -u gitlab-ci-token -p "$CI_JOB_TOKEN" registry.gitlab.com
 
+auto-update:
+  only:
+  - schedules
+  script:
+  - ./update.sh
+  - git push origin master
+
 build:
   stage: build
+  except:
+  - schedules
   script:
   - docker pull "$LAST_IMAGE" || true
   - docker build --build-arg _VERSION="==$_VERSION"
@@ -26,6 +35,8 @@ build:
 
 check:
   stage: test
+  except:
+  - schedules
   script:
   - docker pull "$TEST_IMAGE"
   - docker run -v $PWD:/root:ro "$TEST_IMAGE"
@@ -35,6 +46,8 @@ release:
   stage: deploy
   only:
   - master
+  except:
+  - schedules
   script:
   - docker pull "$TEST_IMAGE"
   - docker tag  "$TEST_IMAGE" "$GOOD_IMAGE"
