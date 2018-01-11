@@ -20,6 +20,7 @@ auto-update:
   only:
   - schedules
   script:
+  - apk add --no-cache curl git jq
   - ./update.sh
   - git push origin master
 
