@@ -106,6 +106,25 @@ outside the container, some the ``serve`` command does by default.
 Use ``Ctrl+C`` to shut down the container process.
 
 
+Command-line Fatigue?
+---------------------
+
+The commands shown above are admittedly a bit long.  You can shorten
+that via a straightforward shell ``alias`` by observing that the
+initial part of most commands is the same.  The ``-p`` is not needed
+by some of the commands but will not do any harm, so
+
+.. code:: sh
+
+   alias nikola='docker run --rm -v $PWD:/site -w /site \
+          -u $(id -u):$(id -g) -p 8888:8000 \
+          registry.gitlab.com/paddy-hack/nikola nikola'
+
+will let you get away with short commands such as ``nikola help`` as
+if ``nikola`` was directly installed on your system.  You will not be
+able to enter the container with ``nikola /bin/sh`` though.
+
+
 .. _Alpine Linux: https://alpinelinux.org/
 .. _Docker: https://www.docker.com/
 .. _Docker Hub: https://hub.docker.com/
