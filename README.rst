@@ -91,6 +91,18 @@ option)
 
 Now you can browse your site at ``http://localhost:8888/``.
 
+Better yet, you can make ``nikola`` monitor the source for your site
+for changes and update it automatically.  Here's how
+
+.. code:: sh
+
+   docker run --rm -v $PWD:/site -w /site -u $(id -u):$(id -g) \
+       -p 8888:8000 registry.gitlab.com/paddy-hack/nikola nikola auto \
+       --address 0.0.0.0
+
+The ``--address`` option is needed to make the site accessible from
+outside the container, some the ``serve`` command does by default.
+
 Use ``Ctrl+C`` to shut down the container process.
 
 
