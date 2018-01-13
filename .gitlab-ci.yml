@@ -18,6 +18,7 @@ before_script:
 
 auto-update:
   only:
+  - master
   - schedules
   script:
   - apk add --no-cache curl git jq
