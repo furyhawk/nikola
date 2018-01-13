@@ -11,7 +11,7 @@ All languages supported by Nikola can be used.
 You can pull the most recent pre-built image directly from the GitLab
 Container Registry with:
 
-::
+.. code:: sh
 
    docker pull registry.gitlab.com/paddy-hack/nikola
 
@@ -35,7 +35,7 @@ Using the Image
 Assuming your Nikola site lives in the current directory, you can use
 something like
 
-::
+.. code:: sh
 
    docker run --rm -it -v $PWD:/site -w /site -u $(id -u):$(id -g) \
        registry.gitlab.com/paddy-hack/nikola /bin/sh
@@ -51,7 +51,7 @@ Once in the container, you can use the regular ``nikola`` commands to
 maintain your site interactively.  Of course, you can also start up a
 container for a one-off ``nikola`` command.  For example
 
-::
+.. code:: sh
 
    docker run --rm -v $PWD:/site -w /site -u $(id -u):$(id -g) \
        registry.gitlab.com/paddy-hack/nikola nikola check -l
@@ -65,7 +65,7 @@ Creating a Nikola Site
 Don't have a site yet?  No problem.  You can run ``nikola init`` in an
 interactive container.  You can also run a one-off, like so
 
-::
+.. code:: sh
 
    docker run --rm -it -v $PWD:/site -w /site -u $(id -u):$(id -g) \
        registry.gitlab.com/paddy-hack/nikola nikola init .
@@ -84,7 +84,7 @@ default but you have to expose that container port in order to make it
 accessible from the outside.  That goes like this (note the ``-p``
 option)
 
-::
+.. code:: sh
 
    docker run --rm -v $PWD:/site -w /site -u $(id -u):$(id -g) \
        -p 8888:8000 registry.gitlab.com/paddy-hack/nikola nikola serve
