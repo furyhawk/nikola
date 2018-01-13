@@ -3,8 +3,10 @@ A Docker Image for Nikola
 
 This is a `Docker`_ image for the `Nikola`_ static site generator.  It
 is based on `Alpine Linux`_ and uses the latest version of Nikola with
-Python 3.  The Nikola "extras" are available.  All languages supported
-by Nikola can be used.
+Python 3.  All Nikola "extras" are available.  Additional requirements
+for any "extras" that you use need to be installed manually.  This can
+be done by deriving a custom Docker image ``FROM`` this one.
+All languages supported by Nikola can be used.
 
 You can pull the most recent pre-built image directly from the GitLab
 Container Registry with:
