@@ -15,8 +15,8 @@ Container Registry with:
 
    docker pull registry.gitlab.com/paddy-hack/nikola
 
-Please note that the image does not have a default command set.  Also
-note that the image uses ``/bin/sh`` rather than ``/bin/bash``.
+Please note that the image sets ``/bin/sh`` as its default command and
+that ``/bin/bash`` is *not* installed.
 
 
 Image Versions
