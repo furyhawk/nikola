@@ -1,10 +1,11 @@
 #!/bin/sh
 # test.sh -- make sure the demo site is minimally functional
-# Copyright (C) 2016  Olaf Meeuwissen
+# Copyright (C) 2016, 2018  Olaf Meeuwissen
 #
 # License: GPL-3.0+
 
 nikola init --quiet --demo test
+sed -i '/COMMENT_SYSTEM/s/".*/""/' test/conf.py
 cd test
 nikola build
 
