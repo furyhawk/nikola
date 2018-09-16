@@ -24,12 +24,15 @@ wget -q $BASE/rss.xml
 rm index.html
 
 # Fetch top post
-wget -q $BASE/posts/welcome-to-nikola.html
+wget -q $BASE/posts/welcome-to-nikola/
+rm index.html
 
 # Fetch post links
-wget -q $BASE/pages/handbook.html
-wget -q $BASE/galleries/demo/index.html
-wget -q $BASE/pages/listings-demo.html
-wget -q $BASE/pages/slides-demo.html
-wget -q $BASE/pages/dr-nikolas-vendetta.html
+wget -q $BASE/pages/handbook/
+rm index.html
+wget -q $BASE/galleries/demo/
+rm index.html
+wget -q $BASE/pages/listings-demo/
+rm index.html
+wget -q $BASE/pages/dr-nikolas-vendetta/
 rm index.html
