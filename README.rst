@@ -101,7 +101,8 @@ for changes and update it automatically.  Here's how
        --address 0.0.0.0
 
 The ``--address`` option is needed to make the site accessible from
-outside the container, some the ``serve`` command does by default.
+outside the container, something that the ``serve`` command does by
+default.
 
 Use ``Ctrl+C`` to shut down the container process.
 
@@ -126,7 +127,7 @@ able to enter the container with ``nikola /bin/sh`` though.
 
 
 .. _Alpine Linux: https://alpinelinux.org/
-.. _Docker: https://www.docker.com/
+.. _Docker: https://docs.docker.com/
 .. _Docker Hub: https://hub.docker.com/
 .. _Nikola: https://getnikola.com/
 .. _container registry: https://gitlab.com/paddy-hack/nikola/container_registry
