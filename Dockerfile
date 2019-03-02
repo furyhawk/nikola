@@ -22,7 +22,6 @@ RUN apk add --no-cache                                                  \
         libxml2-dev                                                     \
         libxslt-dev                                                     \
         jpeg-dev                                                        \
-        zeromq-dev                                                      \
                                                                      && \
     CFLAGS="$CFLAGS -L/lib"                                             \
     pip3 install $PIP_OPTS nikola$_VERSION                              \
@@ -40,6 +39,7 @@ RUN apk add --no-cache                                                  \
         g++                                                             \
         musl-dev                                                        \
         python3-dev                                                     \
+        zeromq-dev                                                      \
                                                                      && \
     pip3 install $PIP_OPTS 'nikola[extras]'$_VERSION                    \
                                                                      && \
