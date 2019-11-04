@@ -4,6 +4,7 @@
 # License: GPL-3.0+
 
 variables:
+  DOCKER_TLS_CERTDIR: "/certs"
   _VERSION: "8.0.2"
   TEST_IMAGE: "$CI_REGISTRY_IMAGE/by-sha:$CI_COMMIT_SHA"
   GOOD_IMAGE: "$CI_REGISTRY_IMAGE:$_VERSION"
