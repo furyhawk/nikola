@@ -12,67 +12,67 @@ variables:
 
 image: docker:latest
 services:
-- docker:dind
+  - docker:dind
 
 before_script:
-- echo "$CI_REGISTRY_PASSWORD"
-       | docker login --username "$CI_REGISTRY_USER"
-                      --password-stdin "$CI_REGISTRY"
+  - echo "$CI_REGISTRY_PASSWORD"
+         | docker login --username "$CI_REGISTRY_USER"
+                        --password-stdin "$CI_REGISTRY"
 
 auto-update:
   only:
-  - schedules
+    - schedules
   before_script:
-  # Install requirements
-  - apk add --no-cache curl git jq openssh-client
-  # Tweak git checkout
-  - git clean -xdffq
-  - git reset --hard
-  - git checkout -B $CI_COMMIT_REF_NAME
-  # Set up for commit and push
-  - git remote set-url --push
-        origin `echo $CI_REPOSITORY_URL
-                | sed 's|^[^@]*\(@[^/]*\)|git\1:|'`
-  - git config user.name "Olaf Meeuwissen"
-  - git config user.email "paddy-hack@member.fsf.org"
-  # Set up SSH
-  - ssh-keyscan $CI_SERVER_HOST > /etc/ssh/ssh_known_hosts
-  - eval `ssh-agent`
-  - chmod 0600 $SSH_PRIVATE_KEY_FILE
-  - ssh-add $SSH_PRIVATE_KEY_FILE
-  script:
-  - ./update.sh
-  - git diff --quiet origin/$CI_COMMIT_REF_NAME
-        || git push origin $CI_COMMIT_REF_NAME
+    # Install requirements
+    - apk add --no-cache curl git jq openssh-client
+    # Tweak git checkout
+    - git clean -xdffq
+    - git reset --hard
+    - git checkout -B $CI_COMMIT_REF_NAME
+    # Set up for commit and push
+    - git remote set-url --push
+          origin `echo $CI_REPOSITORY_URL
+                  | sed 's|^[^@]*\(@[^/]*\)|git\1:|'`
+    - git config user.name "Olaf Meeuwissen"
+    - git config user.email "paddy-hack@member.fsf.org"
+    # Set up SSH
+    - ssh-keyscan $CI_SERVER_HOST > /etc/ssh/ssh_known_hosts
+    - eval `ssh-agent`
+    - chmod 0600 $SSH_PRIVATE_KEY_FILE
+    - ssh-add $SSH_PRIVATE_KEY_FILE
+    script:
+      - ./update.sh
+      - git diff --quiet origin/$CI_COMMIT_REF_NAME
+            || git push origin $CI_COMMIT_REF_NAME
 
 build:
   stage: build
   except:
-  - schedules
+    - schedules
   script:
-  - docker pull "$LAST_IMAGE" || true
-  - docker build --build-arg _VERSION="==$_VERSION"
-           --tag "$TEST_IMAGE" .
-  - docker push  "$TEST_IMAGE"
+    - docker pull "$LAST_IMAGE" || true
+    - docker build --build-arg _VERSION="==$_VERSION"
+             --tag "$TEST_IMAGE" .
+    - docker push  "$TEST_IMAGE"
 
 check:
   stage: test
   except:
-  - schedules
+   - schedules
   script:
-  - docker pull "$TEST_IMAGE"
-  - docker run -v $PWD:/root:ro "$TEST_IMAGE"
-           /bin/sh -e /root/test.sh
+    - docker pull "$TEST_IMAGE"
+    - docker run -v $PWD:/root:ro "$TEST_IMAGE"
+             /bin/sh -e /root/test.sh
 
 release:
   stage: deploy
   only:
-  - master
+    - master
   except:
-  - schedules
+    - schedules
   script:
-  - docker pull "$TEST_IMAGE"
-  - docker tag  "$TEST_IMAGE" "$GOOD_IMAGE"
-  - docker push               "$GOOD_IMAGE"
-  - docker tag                "$GOOD_IMAGE" "$LAST_IMAGE"
-  - docker push                             "$LAST_IMAGE"
+    - docker pull "$TEST_IMAGE"
+    - docker tag  "$TEST_IMAGE" "$GOOD_IMAGE"
+    - docker push               "$GOOD_IMAGE"
+    - docker tag                "$GOOD_IMAGE" "$LAST_IMAGE"
+    - docker push                             "$LAST_IMAGE"
