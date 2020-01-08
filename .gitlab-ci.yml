@@ -40,10 +40,10 @@ auto-update:
     - eval `ssh-agent`
     - chmod 0600 $SSH_PRIVATE_KEY_FILE
     - ssh-add $SSH_PRIVATE_KEY_FILE
-    script:
-      - ./update.sh
-      - git diff --quiet origin/$CI_COMMIT_REF_NAME
-            || git push origin $CI_COMMIT_REF_NAME
+  script:
+    - ./update.sh
+    - git diff --quiet origin/$CI_COMMIT_REF_NAME
+          || git push origin $CI_COMMIT_REF_NAME
 
 build:
   stage: build
