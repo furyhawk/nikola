@@ -1,5 +1,5 @@
 # .gitlab-ci.yml -- to automate Docker Nikola image builds
-# Copyright (C) 2016-2019  Olaf Meeuwissen
+# Copyright (C) 2016-2020  Olaf Meeuwissen
 #
 # License: GPL-3.0+
 
@@ -22,10 +22,28 @@ before_script:
 auto-update:
   only:
   - schedules
+  before_script:
+  # Install requirements
+  - apk add --no-cache curl git jq openssh-client
+  # Tweak git checkout
+  - git clean -xdffq
+  - git reset --hard
+  - git checkout -B $CI_COMMIT_REF_NAME
+  # Set up for commit and push
+  - git remote set-url --push
+        origin `echo $CI_REPOSITORY_URL
+                | sed 's|^[^@]*\(@[^/]*\)|git\1:|'`
+  - git config user.name "Olaf Meeuwissen"
+  - git config user.email "paddy-hack@member.fsf.org"
+  # Set up SSH
+  - ssh-keyscan $CI_SERVER_HOST > /etc/ssh/ssh_known_hosts
+  - eval `ssh-agent`
+  - chmod 0600 $SSH_PRIVATE_KEY_FILE
+  - ssh-add $SSH_PRIVATE_KEY_FILE
   script:
-  - apk add --no-cache curl git jq
   - ./update.sh
   - git diff --quiet origin/$CI_COMMIT_REF_NAME
+        || git push origin $CI_COMMIT_REF_NAME
 
 build:
   stage: build
