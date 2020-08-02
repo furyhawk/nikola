@@ -22,6 +22,7 @@ before_script:
 auto-update:
   only:
     - schedules
+  image: alpine
   before_script:
     # Install requirements
     - apk add --no-cache curl git jq openssh-client
