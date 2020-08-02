@@ -11,6 +11,7 @@ ARG _VERSION
 
 RUN apk add --no-cache                                                  \
         python3                                                         \
+        py3-pip                                                         \
         libxml2                                                         \
         libxslt                                                         \
         jpeg                                                            \
@@ -18,7 +19,6 @@ RUN apk add --no-cache                                                  \
     apk add --no-cache --virtual .build-deps                            \
         gcc                                                             \
         musl-dev                                                        \
-        py3-pip                                                         \
         py3-wheel                                                       \
         python3-dev                                                     \
         libxml2-dev                                                     \
@@ -41,7 +41,6 @@ RUN apk add --no-cache                                                  \
         g++                                                             \
         libffi-dev                                                      \
         musl-dev                                                        \
-        py3-pip                                                         \
         py3-wheel                                                       \
         python3-dev                                                     \
         zeromq-dev                                                      \
