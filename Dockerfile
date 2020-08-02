@@ -1,9 +1,9 @@
 #  Dockerfile -- for a nikola run-time environment
-#  Copyright (C) 2016-2019  Olaf Meeuwissen
+#  Copyright (C) 2016-2020  Olaf Meeuwissen
 #
 #  License: GPL-3.0+
 
-FROM        alpine:3.9
+FROM        alpine:3.12
 MAINTAINER  Olaf Meeuwissen <paddy-hack@member.fsf.org>
 
 ENV PIP_OPTS --no-cache-dir --disable-pip-version-check
@@ -18,6 +18,8 @@ RUN apk add --no-cache                                                  \
     apk add --no-cache --virtual .build-deps                            \
         gcc                                                             \
         musl-dev                                                        \
+        py3-pip                                                         \
+        py3-wheel                                                       \
         python3-dev                                                     \
         libxml2-dev                                                     \
         libxslt-dev                                                     \
@@ -37,7 +39,10 @@ RUN apk add --no-cache                                                  \
                                                                      && \
     apk add --no-cache --virtual .extra-build-deps                      \
         g++                                                             \
+        libffi-dev                                                      \
         musl-dev                                                        \
+        py3-pip                                                         \
+        py3-wheel                                                       \
         python3-dev                                                     \
         zeromq-dev                                                      \
                                                                      && \
