@@ -16,7 +16,7 @@ if test -z "$(echo $release | sed '/^[0-9][0-9]*\(\.[0-9][0-9]*\)*$/!d')"; then
     echo "Unexpected version string: ($release)" >&2
     echo "Please check" >&2
     exit 1
-if
+fi
 
 if test -z "$(git status --porcelain -- .gitlab-ci.yml)"; then
     sed -i "s/\(_VERSION: \"\)[^\"]*\(\"\)/\1$release\2/" .gitlab-ci.yml
