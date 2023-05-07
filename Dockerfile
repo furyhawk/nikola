@@ -1,9 +1,9 @@
 #  Dockerfile -- for a nikola run-time environment
-#  Copyright (C) 2016-2022  Olaf Meeuwissen
+#  Copyright (C) 2016-2023  Olaf Meeuwissen
 #
 #  License: GPL-3.0+
 
-FROM        alpine:3.15
+FROM        alpine:3.17
 MAINTAINER  Olaf Meeuwissen <paddy-hack@member.fsf.org>
 
 ENV PIP_OPTS --no-cache-dir --disable-pip-version-check
