@@ -1,9 +1,0 @@
-# SPDX-License-Identifier: GPL-3.0-or-later
-# SPDX-FileCopyrightText: © 2022 Olaf Meeuwissen
-
-# Use this file to work around backward compatibility issues that may
-# be introduced by newer versions of dependencies at container image
-# build time.
-
-# See https://github.com/getnikola/nikola/pull/3619
-Pygments < 2.12.0
