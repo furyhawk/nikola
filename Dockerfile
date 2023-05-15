@@ -3,7 +3,7 @@
 #
 #  License: GPL-3.0+
 
-FROM        alpine:3.17
+FROM        alpine:3.18
 MAINTAINER  Olaf Meeuwissen <paddy-hack@member.fsf.org>
 
 ENV PIP_OPTS --no-cache-dir --disable-pip-version-check
