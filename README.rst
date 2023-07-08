@@ -125,9 +125,56 @@ will let you get away with short commands such as ``nikola help`` as
 if ``nikola`` was directly installed on your system.  You will not be
 able to enter the container with ``nikola /bin/sh`` though.
 
+Composing An Alternative
+~~~~~~~~~~~~~~~~~~~~~~~~
+
+Another option to keep the commands shorter is to use the `Docker Compose`_ file.
+You can set the options to suit your environment then simply run a few commands like this:
+
+Create a new site,
+
+.. code:: sh
+
+   docker compose run nikola-init
+
+Build the site,
+
+.. code:: sh
+
+   docker compose run nikola-build
+
+Serve the site,
+
+.. code:: sh
+
+   docker compose up nikola-serve
+
+Inside the `Docker Compose`_ file are some `environment variables`_ referenced as ``${VAR:-default}`` where if ``VAR`` is not set it will use ``default``. You can use a file named ``.env`` in the same
+directory to set all your customized values. Values which can be changed in the compose file are the same as described above with ``docker run`` and include:
+
+.. code:: sh
+
+   ${UID:-1000}:${GID:-1000}
+   ${PORT:-8888}:8000
+   ${DATADIR:-.}:/site
+
+If your environment includes a user and group with ID ``500``, you want to use port ``8080`` on the host machine and to store your site files in ``/home/username/site`` then
+you could use a ``.env`` file with the values:
+
+.. code:: sh
+
+   UID=500
+   GID=500
+   PORT=8080
+   DATADIR=/home/username/site
+
+Read the compose documentation on `environmental files`_ for further details.
 
 .. _Alpine Linux: https://alpinelinux.org/
 .. _Docker: https://docs.docker.com/
 .. _Docker Hub: https://hub.docker.com/
 .. _Nikola: https://getnikola.com/
 .. _container registry: https://gitlab.com/paddy-hack/nikola/container_registry
+.. _Docker Compose: https://docs.docker.com/compose/
+.. _environment variables: https://docs.docker.com/compose/environment-variables/set-environment-variables/
+.. _environmental files: https://docs.docker.com/compose/environment-variables/env-file/

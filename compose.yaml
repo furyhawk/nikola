@@ -1,0 +1,42 @@
+#  Docker Compose -- for a nikola run-time environment
+#  Copyright (C) 2023  Oliver Hansen
+#
+#  License: GPL-3.0+
+
+x-base_service: &base_service                   # Define the base service with common configurations
+  image: registry.gitlab.com/paddy-hack/nikola
+  user: ${UID:-1000}:${GID:-1000}
+  ports:
+    - ${PORT:-8888}:8000
+  volumes:
+    - ${DATADIR:-.}:/site
+  working_dir: /site
+  restart: no
+
+name: nikola
+
+# Define services
+services:
+  nikola-interactive:
+    <<: *base_service                             # Inherit from the base service
+    command: /bin/sh
+
+  nikola-init:
+    <<: *base_service
+    command: nikola init .
+
+  nikola-build:
+    <<: *base_service
+    command: nikola build
+  
+  nikola-checklinks:
+    <<: *base_service
+    command: nikola check -l
+
+  nikola-serve:
+    <<: *base_service
+    command: nikola serve
+
+  nikola-auto:
+    <<: *base_service
+    command: nikola auto --address 0.0.0.0
