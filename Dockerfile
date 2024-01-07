@@ -32,7 +32,8 @@ RUN apk add --no-cache                                                  \
     pipx install "$PIPX_OPTS" nikola$_VERSION                           \
                                                                      && \
     apk del .build-deps                                              && \
-    find /usr/lib/python3.*                                             \
+    rm -rf ~/.cache $PIPX_HOME/.cache $PIPX_HOME/logs                && \
+    find /usr/lib/python3.* $PIPX_HOME                                  \
         \( -type d -a -name test -o -name tests \)                      \
         -o \( -type f -a -name '*.pyc' -o -name '*.pyo' \)              \
         -exec rm -rf '{}' +
@@ -51,7 +52,8 @@ RUN apk add --no-cache                                                  \
     pipx install --force "$PIPX_OPTS" 'nikola[extras]'$_VERSION         \
                                                                      && \
     apk del .extra-build-deps                                        && \
-    find /usr/lib/python3.*                                             \
+    rm -rf ~/.cache $PIPX_HOME/.cache $PIPX_HOME/logs                && \
+    find /usr/lib/python3.* $PIPX_HOME                                  \
         \( -type d -a -name test -o -name tests \)                      \
         -o \( -type f -a -name '*.pyc' -o -name '*.pyo' \)              \
         -exec rm -rf '{}' +
