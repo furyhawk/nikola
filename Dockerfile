@@ -6,12 +6,15 @@
 FROM        alpine:3.19
 MAINTAINER  Olaf Meeuwissen <paddy-hack@member.fsf.org>
 
-ENV PIP_OPTS --no-cache-dir --disable-pip-version-check
+ENV PIPX_HOME=/opt/pipx                                                 \
+    PIPX_BIN_DIR=/usr/local/bin                                         \
+    PIPX_MAN_DIR=/usr/local/share/man                                   \
+    PIPX_OPTS="--pip-args=--no-cache-dir --disable-pip-version-check"
 ARG _VERSION
 
 RUN apk add --no-cache                                                  \
         python3                                                         \
-        py3-pip                                                         \
+        pipx                                                            \
         libxml2                                                         \
         libxslt                                                         \
         jpeg                                                            \
@@ -26,7 +29,7 @@ RUN apk add --no-cache                                                  \
         jpeg-dev                                                        \
                                                                      && \
     CFLAGS="$CFLAGS -L/lib"                                             \
-    pip3 install $PIP_OPTS nikola$_VERSION                              \
+    pipx install "$PIPX_OPTS" nikola$_VERSION                           \
                                                                      && \
     apk del .build-deps                                              && \
     find /usr/lib/python3.*                                             \
@@ -45,7 +48,7 @@ RUN apk add --no-cache                                                  \
         python3-dev                                                     \
         zeromq-dev                                                      \
                                                                      && \
-    pip3 install $PIP_OPTS 'nikola[extras]'$_VERSION                    \
+    pipx install --force "$PIPX_OPTS" 'nikola[extras]'$_VERSION         \
                                                                      && \
     apk del .extra-build-deps                                        && \
     find /usr/lib/python3.*                                             \
