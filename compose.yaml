@@ -4,7 +4,7 @@
 #  License: GPL-3.0+
 
 x-base_service: &base_service                   # Define the base service with common configurations
-  image: registry.gitlab.com/paddy-hack/nikola
+  image: furyhawk/nikola
   user: ${UID:-1000}:${GID:-1000}
   ports:
     - ${PORT:-8888}:8000

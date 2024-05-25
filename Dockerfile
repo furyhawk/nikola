@@ -3,8 +3,8 @@
 #
 #  License: GPL-3.0+
 
-FROM        alpine:3.19
-MAINTAINER  Olaf Meeuwissen <paddy-hack@member.fsf.org>
+FROM alpine
+LABEL MAINTAINER="Olaf Meeuwissen <paddy-hack@member.fsf.org>"
 
 ENV PIPX_HOME=/opt/pipx                                                 \
     PIPX_BIN_DIR=/usr/local/bin                                         \
